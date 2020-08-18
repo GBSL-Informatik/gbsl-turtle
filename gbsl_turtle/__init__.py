@@ -189,20 +189,21 @@ def home():
     __SingletonTurtle().home()
 
 
-def goto(x: int, y: int = None):
+def goto(x: int, y: int = None, draw: bool =True):
     """Move turtle to an absolute position.
 
-    Aliases: setpos | setposition | goto:
+    Aliases: setpos | goto:
 
     Arguments:
     x -- a number      or     a pair/vector of numbers
     y -- a number             None
+    draw -- bool              True
 
     call: `goto(x, y)`        # two coordinates
     --or: `goto((x, y))`      # a pair (tuple) of coordinates
     --or: `goto(vec)`         # e.g. as returned by pos()
 
-    Move turtle to an absolute position. If the pen is down,
+    Move turtle to an absolute position. If the pen is down and draw=True,
     a line will be drawn. The turtle's orientation does not change.
 
     Example (for a Turtle instance named turtle):
@@ -219,7 +220,15 @@ def goto(x: int, y: int = None):
     >>> turtle.pos()
     (0.00,0.00)
     """
-    __SingletonTurtle().goto(x, y=y)
+
+    if not draw:
+        was_down = __SingletonTurtle().isdown()
+        __SingletonTurtle().up()
+
+    __SingletonTurtle.goto(x, y=y)
+
+    if not draw and was_down:
+        __SingletonTurtle().down()
 
 
 def pos() -> turtle.Vec2D:
@@ -236,10 +245,10 @@ def pos() -> turtle.Vec2D:
     __SingletonTurtle().pos()
 
 
-def setpos(x: int, y: int = None):
+def setpos(x: int, y: int = None, draw=False):
     """Move turtle to an absolute position.
 
-    Aliases: setpos | setposition | goto:
+    Aliases: setpos | goto:
 
     Arguments:
     x -- a number      or     a pair/vector of numbers
@@ -266,7 +275,7 @@ def setpos(x: int, y: int = None):
     >>> turtle.pos()
     (0.00,0.00)
     """
-    __SingletonTurtle().setpos(x, y)
+    goto(x, y, draw=draw)
 
 
 def position() -> turtle.Vec2D:
