@@ -225,7 +225,7 @@ def goto(x: int, y: int = None, draw: bool =True):
         was_down = __SingletonTurtle().isdown()
         __SingletonTurtle().up()
 
-    __SingletonTurtle.goto(x, y=y)
+    __SingletonTurtle().goto(x, y=y)
 
     if not draw and was_down:
         __SingletonTurtle().down()
