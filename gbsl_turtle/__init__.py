@@ -134,6 +134,24 @@ def forward(step: int = 10):
     '''
     __SingletonTurtle().forward(step)
 
+def backward(step: int = 10):
+    """Move the turtle backward by distance.
+
+    Argument:
+    distance -- a number
+
+    Move the turtle backward by distance ,opposite to the direction the
+    turtle is headed. Do not change the turtle's heading.
+
+    Example (for a Turtle instance named turtle):
+    >>> turtle.position()
+    (0.00, 0.00)
+    >>> turtle.backward(30)
+    >>> turtle.position()
+    (-30.00, 0.00)
+    """
+    __SingletonTurtle().backward(step)
+
 
 def step_down():
     '''draws a step down on a stair'''
