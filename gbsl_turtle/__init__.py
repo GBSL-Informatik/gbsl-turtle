@@ -1,5 +1,4 @@
 import tkinter
-# from turtle import Screen, Turtle, _Screen
 import turtle
 
 
@@ -11,7 +10,9 @@ def Turtle(shape=turtle._CFG["shape"],
     When a Turtle object is created or a function derived from some
     Turtle method is called a TurtleScreen object is automatically created.
     """
-    return turtle.Turtle(shape=shape, undobuffersize=undobuffersize, visible=visible)
+    new_turtle: turtle.Turtle = turtle.Turtle(shape=shape, undobuffersize=undobuffersize, visible=visible)
+    move_screen_to_top(screen=new_turtle.getscreen())
+    return new_turtle
 
 
 __turtle: turtle.Turtle = None
@@ -29,6 +30,23 @@ def Screen() -> turtle._Screen:
     If none exists at the moment, create a new one and return it,
     else return the existing one."""
     return turtle.Screen()
+
+__is_screen_topmost = {}
+
+def move_screen_to_top(screen: turtle._Screen = None):
+    '''
+    Moves the given screen over all other windows and keeps it there. Defaults to the Screen() object.
+    '''
+    global __is_screen_topmost
+    if screen is None:
+        screen = Screen()
+
+    canvas = screen.getcanvas()
+    if id(canvas) not in __is_screen_topmost:
+        tk_screen = canvas.winfo_toplevel()
+        tk_screen.call('wm', 'attributes', '.', '-topmost', '0')
+        tk_screen.call('wm', 'attributes', '.', '-topmost', '1')
+        __is_screen_topmost[id(canvas)] = True
 
 
 def clone() -> turtle.Turtle:
@@ -623,7 +641,6 @@ def isvisible():
 
 
 if __name__ == '__main__':
-    Screen().exitonclick
     forward(10)
     pencolor(0.2, 0.8, 0.55)
     left(90)
