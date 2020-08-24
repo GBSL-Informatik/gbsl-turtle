@@ -31,7 +31,9 @@ def Screen() -> turtle._Screen:
     else return the existing one."""
     return turtle.Screen()
 
+
 __is_screen_topmost = {}
+
 
 def move_screen_to_top(screen: turtle._Screen = None):
     '''
@@ -152,6 +154,7 @@ def forward(step: int = 10):
     '''
     __SingletonTurtle().forward(step)
 
+
 def backward(step: int = 10):
     """Move the turtle backward by distance.
 
@@ -207,7 +210,7 @@ def home():
     __SingletonTurtle().home()
 
 
-def goto(x: int, y: int = None, draw: bool =True):
+def goto(x: int, y: int = None, draw: bool = True):
     """Move turtle to an absolute position.
 
     Aliases: setpos | goto:
@@ -239,17 +242,33 @@ def goto(x: int, y: int = None, draw: bool =True):
     (0.00,0.00)
     """
 
+    was_down = False
+
     if not draw:
         was_down = __SingletonTurtle().isdown()
-        __SingletonTurtle().up()
+        __SingletonTurtle().penup()
 
     __SingletonTurtle().goto(x, y=y)
 
     if not draw and was_down:
-        __SingletonTurtle().down()
+        __SingletonTurtle().pendown()
 
 
 def pos() -> turtle.Vec2D:
+    """Return the turtle's current location (x,y), as a Vec2D-vector.
+
+    Aliases: pos | position
+
+    No arguments.
+
+    Example (for a Turtle instance named turtle):
+    >>> turtle.pos()
+    (0.00, 240.00)
+    """
+    __SingletonTurtle().pos()
+
+
+def position() -> turtle.Vec2D:
     """Return the turtle's current location (x,y), as a Vec2D-vector.
 
     Aliases: pos | position
@@ -296,20 +315,6 @@ def setpos(x: int, y: int = None, draw=False):
     goto(x, y, draw=draw)
 
 
-def position() -> turtle.Vec2D:
-    """Return the turtle's current location (x,y), as a Vec2D-vector.
-
-    Aliases: pos | position
-
-    No arguments.
-
-    Example (for a Turtle instance named turtle):
-    >>> turtle.pos()
-    (0.00, 240.00)
-    """
-    __SingletonTurtle().pos()
-
-
 def heading() -> float:
     '''
     Return the turtle's current heading.
@@ -327,12 +332,12 @@ def setheading(to_angle) -> float:
     Set the orientation of the turtle to to_angle.
     Here are some common directions in degrees:
 
-    |    standard - mode:|          logo-mode:|
-    |:-------------------|:-------------------|
-    |    0 - east         |       0 - north   |
-    |    90 - north       |       90 - east   |
-    |    180 - west       |       180 - south |
-    |    270 - south      |       270 - west  |
+    |    standard - mode: |          logo-mode:|
+    |:--------------------|:-------------------|
+    |    0 - east         |       0 - north    |
+    |    90 - north       |       90 - east    |
+    |    180 - west       |       180 - south  |
+    |    270 - south      |       270 - west   |
 
     Example (for a Turtle instance named turtle):
     >>> turtle.setheading(90)
@@ -340,6 +345,7 @@ def setheading(to_angle) -> float:
     90
     """
     return __SingletonTurtle().setheading(to_angle=to_angle)
+
 
 def color(*args):
     """Return or set the pencolor and fillcolor.
@@ -376,6 +382,7 @@ def color(*args):
     __SingletonTurtle().color(*args)
     return __SingletonTurtle().color()
 
+
 def colormode(cmode=None):
     """Return the colormode or set it to 1.0 or 255.
 
@@ -391,6 +398,7 @@ def colormode(cmode=None):
     >>> pencolor(240,160,80)
     """
     return Screen().colormode(cmode=cmode)
+
 
 def pencolor(*args):
     """ Return or set the pencolor.
@@ -423,6 +431,7 @@ def pencolor(*args):
     """
     return __SingletonTurtle().pencolor(*args)
 
+
 def home():
     """Move turtle to the origin - coordinates (0,0).
 
@@ -435,6 +444,7 @@ def home():
     >>> turtle.home()
     """
     return __SingletonTurtle().home()
+
 
 def clear():
     """Delete all drawings and all turtles from the TurtleScreen.
@@ -450,6 +460,7 @@ def clear():
     Note: this method is not available as function.
     """
     return __SingletonTurtle().clear()
+
 
 def distance(x, y=None):
     """Return the distance from the turtle to (x,y) in turtle step units.
@@ -474,7 +485,7 @@ def distance(x, y=None):
     77.0
     """
     return __SingletonTurtle().distance(x, y=y)
-    
+
 
 def dot():
     """Draw a dot with diameter size, using color.
@@ -492,6 +503,7 @@ def dot():
     """
     return __SingletonTurtle().dot()
 
+
 def pendown():
     """Pull the pen down -- drawing when moving.
 
@@ -504,6 +516,7 @@ def pendown():
     """
     return __SingletonTurtle().pendown()
 
+
 def penup():
     """Pull the pen up -- no drawing when moving.
 
@@ -515,6 +528,7 @@ def penup():
     >>> turtle.penup()
     """
     return __SingletonTurtle().penup()
+
 
 def pensize(width=None):
     """Set or return the line thickness.
@@ -536,6 +550,7 @@ def pensize(width=None):
     """
     return __SingletonTurtle().pensize(width=width)
 
+
 def begin_fill(width=None):
     """Called just before drawing a shape to be filled.
 
@@ -549,6 +564,7 @@ def begin_fill(width=None):
     """
     return __SingletonTurtle().begin_fill()
 
+
 def end_fill(width=None):
     """Fill the shape drawn after the call begin_fill().
 
@@ -561,6 +577,7 @@ def end_fill(width=None):
     >>> turtle.end_fill()
     """
     return __SingletonTurtle().end_fill()
+
 
 def isdown() -> bool:
     """Return True if pen is down, False if it's up.
@@ -576,6 +593,7 @@ def isdown() -> bool:
     True
     """
     return __SingletonTurtle().isdown()
+
 
 def write(arg, move=False, align="left", font=("Arial", 8, "normal")):
     """Write text at the current turtle position.
@@ -598,6 +616,7 @@ def write(arg, move=False, align="left", font=("Arial", 8, "normal")):
     """
     return __SingletonTurtle().write(arg, move=move, align=align, font=font)
 
+
 def hideturtle():
     """Makes the turtle invisible.
 
@@ -614,6 +633,7 @@ def hideturtle():
     """
     return __SingletonTurtle().hideturtle()
 
+
 def showturtle():
     """Makes the turtle visible.
 
@@ -626,6 +646,7 @@ def showturtle():
     >>> turtle.showturtle()
     """
     return __SingletonTurtle().showturtle()
+
 
 def isvisible():
     """Return True if the Turtle is shown, False if it's hidden.
