@@ -196,21 +196,6 @@ def done():
     Screen().exitonclick()
 
 
-def home():
-    """
-    Move turtle to the origin - coordinates (0,0).
-
-    No arguments.
-
-    Move turtle to the origin - coordinates (0,0) and set its
-    heading to its start-orientation (which depends on mode).
-
-    Example (for a Turtle instance named turtle):
-    >>> turtle.home()
-    """
-    __SingletonTurtle().home()
-
-
 def goto(x: int, y: int = None, draw: bool = True):
     """Move turtle to an absolute position.
 
@@ -253,6 +238,24 @@ def goto(x: int, y: int = None, draw: bool = True):
 
     if not draw and was_down:
         __SingletonTurtle().pendown()
+
+
+def home(draw: bool = True):
+    """
+    Move turtle to the origin - coordinates (0,0).
+
+    Arguments:
+    draw -- bool              True
+
+    Move turtle to the origin - coordinates (0,0) and set its
+    heading to its start-orientation (which depends on mode).
+
+    Example (for a Turtle instance named turtle):
+    >>> turtle.home()
+    """
+    if draw == False:
+        goto(0, 0, draw=False)
+    __SingletonTurtle().home()
 
 
 def pos() -> turtle.Vec2D:
@@ -462,20 +465,6 @@ def pencolor(*args):
     '#33cc8c'
     """
     return __SingletonTurtle().pencolor(*args)
-
-
-def home():
-    """Move turtle to the origin - coordinates (0,0).
-
-    No arguments.
-
-    Move turtle to the origin - coordinates (0,0) and set its
-    heading to its start-orientation (which depends on mode).
-
-    Example (for a Turtle instance named turtle):
-    >>> turtle.home()
-    """
-    return __SingletonTurtle().home()
 
 
 def clear():
