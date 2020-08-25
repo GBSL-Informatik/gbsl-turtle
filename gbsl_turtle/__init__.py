@@ -192,7 +192,8 @@ def step_up():
 
 def done():
     '''hides the turtle and waits until the resulting window is clicked'''
-    __SingletonTurtle().done()
+    __SingletonTurtle().hideturtle()
+    Screen().exitonclick()
 
 
 def home():
@@ -345,6 +346,37 @@ def setheading(to_angle) -> float:
     90
     """
     return __SingletonTurtle().setheading(to_angle=to_angle)
+
+
+def fillcolor(*args):
+    """ Return or set the fillcolor.
+
+    Arguments:
+    Four input formats are allowed:
+        - fillcolor()
+        Return the current fillcolor as color specification string,
+        possibly in hex-number format (see example).
+        May be used as input to another color/pencolor/fillcolor call.
+        - fillcolor(colorstring)
+        s is a Tk color specification string, such as "red" or "yellow"
+        - fillcolor((r, g, b))
+        *a tuple* of r, g, and b, which represent, an RGB color,
+        and each of r, g, and b are in the range 0..colormode,
+        where colormode is either 1.0 or 255
+        - fillcolor(r, g, b)
+        r, g, and b represent an RGB color, and each of r, g, and b
+        are in the range 0..colormode
+
+    If turtleshape is a polygon, the interior of that polygon is drawn
+    with the newly set fillcolor.
+
+    Example (for a Turtle instance named turtle):
+    >>> turtle.fillcolor('violet')
+    >>> col = turtle.pencolor()
+    >>> turtle.fillcolor(col)
+    >>> turtle.fillcolor(0, .5, 0)
+    """
+    return __SingletonTurtle().fillcolor(*args)
 
 
 def color(*args):
@@ -632,6 +664,36 @@ def hideturtle():
     >>> turtle.hideturtle()
     """
     return __SingletonTurtle().hideturtle()
+
+
+def speed(speed=None):
+    """ Return or set the turtle's speed.
+
+    Optional argument:
+    speed -- an integer in the range 0..10 or a speedstring (see below)
+
+    Set the turtle's speed to an integer value in the range 0 .. 10.
+    If no argument is given: return current speed.
+
+    If input is a number greater than 10 or smaller than 0.5,
+    speed is set to 0.
+    Speedstrings  are mapped to speedvalues in the following way:
+        'fastest' :  0
+        'fast'    :  10
+        'normal'  :  6
+        'slow'    :  3
+        'slowest' :  1
+    speeds from 1 to 10 enforce increasingly faster animation of
+    line drawing and turtle turning.
+
+    Attention:
+    speed = 0 : *no* animation takes place. forward/back makes turtle jump
+    and likewise left/right make the turtle turn instantly.
+
+    Example (for a Turtle instance named turtle):
+    >>> turtle.speed(3)
+    """
+    return __SingletonTurtle().speed()
 
 
 def showturtle():
