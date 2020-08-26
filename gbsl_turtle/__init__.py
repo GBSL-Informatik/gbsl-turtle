@@ -193,6 +193,7 @@ def step_up():
 def done():
     '''hides the turtle and waits until the resulting window is clicked'''
     __SingletonTurtle().hideturtle()
+    Screen().update()
     Screen().exitonclick()
 
 
