@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="gbsl_turtle",
-    version="0.0.9",
+    version="0.0.10",
     author="Balthasar Hofer",
     author_email="lebalz@outlook.com",
     description="Typed default turtle for gym gsbl",

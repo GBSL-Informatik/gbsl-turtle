@@ -683,7 +683,7 @@ def speed(speed=None):
     Example (for a Turtle instance named turtle):
     >>> turtle.speed(3)
     """
-    return __SingletonTurtle().speed()
+    return __SingletonTurtle().speed(speed)
 
 
 def showturtle():
@@ -711,6 +711,42 @@ def isvisible():
     False
     """
     return __SingletonTurtle().isvisible()
+
+
+def grid(xmin: int, xmax: int, ymin: int, ymax: int, tick: int, scale: int = 1):
+    '''draws a grid and draws the coordinate numbers
+    '''
+    if tkinter.TkVersion < 8.6:
+        raise "TkVersion must be >= 8.6"
+    old_pos = getturtle().pos()
+    old_pensize = getturtle().pensize()
+    pensize(1)
+    old_color = getturtle().color()
+    old_update_freq = Screen().tracer()
+    old_delay = Screen().delay()
+    Screen().tracer(0, 0)
+    pencolor('lightgray')
+    offset_x = len(str(max(xmax, xmin))) * 2
+    offset_y = len(str(max(ymax, ymin))) * 2
+    for xtick in range(scale * xmin, scale * xmax + 1, tick):
+        Screen().getcanvas().create_text(xtick * Screen().xscale + offset_x, -(scale * xmin - 2) *
+                                         Screen().yscale, text=xtick, fill="black", anchor="se", angle=90, font=("Arial", 8, "normal"))
+        Screen().update()
+        goto(xtick, scale * ymin, draw=False)
+        goto(xtick, scale * ymax, draw=True)
+
+    for ytick in range(scale * ymin, scale * ymax + 1, tick):
+        goto(scale * xmin, ytick - offset_y, draw=False)
+        pencolor('black')
+        write(ytick, align='right')
+        pencolor('lightgray')
+        goto(scale * xmin, ytick, draw=False)
+        goto(scale * xmax, ytick, draw=True)
+    Screen().update()
+    goto(*old_pos, draw=False)
+    pensize(old_pensize)
+    color(*old_color)
+    Screen().tracer(old_update_freq, old_delay)
 
 
 if __name__ == '__main__':
