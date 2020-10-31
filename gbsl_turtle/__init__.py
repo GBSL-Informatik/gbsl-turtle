@@ -713,6 +713,25 @@ def isvisible():
     return __SingletonTurtle().isvisible()
 
 
+__prev_delay = 10
+__prev_tracer = 1
+
+
+def turbomode(on: bool = None) -> bool:
+    global __prev_tracer, __prev_delay
+    if on is None:
+        return Screen().delay() == 0
+    if on:
+        if Screen().delay() != 0:
+            __prev_delay = Screen().delay()
+            __prev_tracer = Screen().tracer()
+        Screen().tracer(1, 0)
+        return True
+
+    Screen().tracer(__prev_tracer, __prev_delay)
+    return False
+
+
 def grid(xmin: int, xmax: int, ymin: int, ymax: int, tick: int, scale: int = 1):
     '''draws a grid and draws the coordinate numbers
     '''
@@ -729,8 +748,15 @@ def grid(xmin: int, xmax: int, ymin: int, ymax: int, tick: int, scale: int = 1):
     offset_x = len(str(max(xmax, xmin))) * 2
     offset_y = len(str(max(ymax, ymin))) * 2
     for xtick in range(scale * xmin, scale * xmax + 1, tick):
-        Screen().getcanvas().create_text(xtick * Screen().xscale + offset_x, -(scale * xmin - 2) *
-                                         Screen().yscale, text=xtick, fill="black", anchor="se", angle=90, font=("Arial", 8, "normal"))
+        Screen().getcanvas().create_text(
+            xtick * Screen().xscale + offset_x,
+            -(scale * ymin - 3) * Screen().yscale,
+            text=xtick,
+            fill="black",
+            anchor="se",
+            angle=90,
+            font=("Arial", 8, "normal")
+        )
         Screen().update()
         goto(xtick, scale * ymin, draw=False)
         goto(xtick, scale * ymax, draw=True)
