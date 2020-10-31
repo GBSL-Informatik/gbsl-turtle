@@ -747,11 +747,11 @@ def grid(xmin: int, xmax: int, ymin: int, ymax: int, tick: int, scale: int = 1):
     pencolor('lightgray')
     offset_x = len(str(max(xmax, xmin))) * 2
     offset_y = len(str(max(ymax, ymin))) * 2
-    for xtick in range(scale * xmin, scale * xmax + 1, tick):
+    for xtick in range(scale * xmin, scale * xmax + 1, int(scale * tick)):
         Screen().getcanvas().create_text(
             xtick * Screen().xscale + offset_x,
             -(scale * ymin - 3) * Screen().yscale,
-            text=xtick,
+            text=int(xtick / scale),
             fill="black",
             anchor="se",
             angle=90,
@@ -761,10 +761,10 @@ def grid(xmin: int, xmax: int, ymin: int, ymax: int, tick: int, scale: int = 1):
         goto(xtick, scale * ymin, draw=False)
         goto(xtick, scale * ymax, draw=True)
 
-    for ytick in range(scale * ymin, scale * ymax + 1, tick):
+    for ytick in range(scale * ymin, scale * ymax + 1, int(tick * scale)):
         goto(scale * xmin, ytick - offset_y, draw=False)
         pencolor('black')
-        write(ytick, align='right')
+        write(int(ytick / scale), align='right')
         pencolor('lightgray')
         goto(scale * xmin, ytick, draw=False)
         goto(scale * xmax, ytick, draw=True)
