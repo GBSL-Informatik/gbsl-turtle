@@ -21,6 +21,9 @@ __turtle: turtle.Turtle = None
 def __SingletonTurtle() -> turtle.Turtle:
     global __turtle
     if (__turtle is None):
+        if not turtle.TurtleScreen._RUNNING:
+            turtle.Turtle._screen = None  # force recreation of singleton Screen object
+            turtle.TurtleScreen._RUNNING = True  # only set upon TurtleScreen() definition
         __turtle = Turtle()
     return __turtle
 
@@ -29,7 +32,7 @@ def Screen() -> turtle._Screen:
     """Return the singleton screen object.
     If none exists at the moment, create a new one and return it,
     else return the existing one."""
-    return turtle.Screen()
+    return __SingletonTurtle().getscreen()
 
 
 __is_screen_topmost = {}
@@ -153,6 +156,18 @@ def forward(step: int = 10):
             pixels to go forward
     '''
     __SingletonTurtle().forward(step)
+
+
+def bye():
+    global __turtle
+    Screen().bye()
+    __turtle = None
+
+
+def exitonclick():
+    global __turtle
+    Screen().exitonclick()
+    __turtle = None
 
 
 def backward(step: int = 10):
@@ -777,8 +792,9 @@ def grid(xmin: int, xmax: int, ymin: int, ymax: int, tick: int, scale: int = 1):
 
 if __name__ == '__main__':
     forward(10)
+    exitonclick()
     pencolor(0.2, 0.8, 0.55)
     left(90)
     write('blaaa', True)
     forward(20)
-    Screen().exitonclick()
+    exitonclick()
